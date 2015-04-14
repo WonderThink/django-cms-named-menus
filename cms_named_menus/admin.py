@@ -3,6 +3,8 @@ from .models import CMSNamedMenu
 import json
 from django.conf import settings
 from menus.menu_pool import menu_pool
+from django.utils.functional import Promise
+from django.utils.encoding import force_unicode
 
 
 class LazyEncoder(json.JSONEncoder):
@@ -45,8 +47,8 @@ class CMSNamedMenuAdmin(admin.ModelAdmin):
         for node in nodes:
             node.children = None
             node.parent = None
+            node.attr = None
             cleaned.append(node.__dict__)
-
         return json.dumps(cleaned, cls=LazyEncoder)
 
 
